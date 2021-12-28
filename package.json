@@ -1,0 +1,40 @@
+{
+  "name": "shitcoin-factory",
+  "version": "1.0.0",
+  "description": "Shitcoin Factory",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "truffle test",
+    "lint": "./node_modules/.bin/prettier --write contracts/**/*.sol",
+    "check": "./node_modules/.bin/solhint contracts/**/*.sol",
+    "lintjs": "./node_modules/.bin/eslint --fix migrations/**/*.js tests/**/*.js",
+    "checkjs": "./node_modules/.bin/eslint --no-error-on-unmatched-pattern migrations/**/*.js tests/**/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kovrichard/insure.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kovrichard/insure/issues"
+  },
+  "homepage": "https://github.com/kovrichard/insure#readme",
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.2.0",
+    "lodash": "^4.17.21",
+    "prettier": "^2.5.1",
+    "prettier-plugin-solidity": "^1.0.0-beta.19",
+    "solhint": "^3.3.6",
+    "solhint-plugin-prettier": "0.0.5",
+    "truffle": "^5.4.26",
+    "truffle-assertions": "^0.9.2"
+  }
+}
