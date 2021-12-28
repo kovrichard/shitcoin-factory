@@ -3,6 +3,10 @@ services:
   shitcoin-factory:
     build: ./
     image: shitcoin-factory
-    working_dir: /usr/src/app/shitcoin-factory
+    working_dir: /usr/src/app
     volumes:
-      - ./:/usr/src/app/shitcoin-factory
+      - ./:/usr/src/app
+      - exclude:/usr/src/app/node_modules/
+
+volumes:
+  exclude:
