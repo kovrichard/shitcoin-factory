@@ -1,4 +1,4 @@
-.PHONY: build start stop restart sh logs compile deploy tsh test addresses lint
+.PHONY: build start stop restart sh logs compile deploy tsh test addresses lint run
 
 container=shitcoin-factory
 
@@ -49,3 +49,6 @@ lint:
 	docker compose exec ${container} npm run check
 	docker compose exec ${container} npm run lintjs
 	docker compose exec ${container} npm run checkjs
+
+run:
+	docker compose exec ${container} truffle exec index.js
