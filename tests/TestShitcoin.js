@@ -25,11 +25,11 @@ contract('Shitcoin', (accounts) => {
     }, 'Creation should emit Transfer event.');
   });
 
-  it('Transfer should fail to null address', async () => {
+  it('Transfer should revert on sending to null address', async () => {
     await expect(token.transfer(nullAddress, 1)).to.be.revertedWith('BEP20: transfer to the zero address');
   });
 
-  it('Transfer should fail on low balance', async () => {
+  it('Transfer should revert on low balance', async () => {
     await expect(token.transfer(accounts[0], 2)).to.be.revertedWith('BEP20: transfer amount exceeds balance');
   });
 
@@ -44,7 +44,7 @@ contract('Shitcoin', (accounts) => {
       .withArgs(wallet.address, walletTo.address, 1);
   });
 
-  it('Approve should fail to null address', async () => {
+  it('Approve should revert on approving to null address', async () => {
     await expect(token.approve(nullAddress, 5)).to.be.revertedWith('BEP20: approve to the zero address');
   });
 
@@ -59,7 +59,7 @@ contract('Shitcoin', (accounts) => {
       .withArgs(wallet.address, walletTo.address, 5);
   });
 
-  it('TransferFrom should fail on low allowance', async () => {
+  it('TransferFrom should revert on low allowance', async () => {
     await token.transfer(walletTo.address, 1);
     await expect(token.transferFrom(walletTo.address, otherWallet.address, 1)).to.be.revertedWith('BEP20: transfer amount exceeds allowance');
   });
@@ -92,7 +92,7 @@ contract('Shitcoin', (accounts) => {
     expect(await token.allowance(wallet.address, walletTo.address)).to.equal(1);
   });
   
-  it('DecreaseAllowance should fail when deceasing below zero', async () => {
+  it('DecreaseAllowance should revert when deceasing below zero', async () => {
     await token.approve(walletTo.address, 1);
     await expect(token.decreaseAllowance(walletTo.address, 2)).to.be.revertedWith('BEP20: decreased allowance below zero');
   });
