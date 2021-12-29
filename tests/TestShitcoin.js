@@ -91,10 +91,51 @@ contract('Shitcoin', (accounts) => {
     await token.decreaseAllowance(walletTo.address, 4);
     expect(await token.allowance(wallet.address, walletTo.address)).to.equal(1);
   });
-  
+
   it('DecreaseAllowance should revert when deceasing below zero', async () => {
     await token.approve(walletTo.address, 1);
     await expect(token.decreaseAllowance(walletTo.address, 2)).to.be.revertedWith('BEP20: decreased allowance below zero');
   });
 
+  it('Mint should not be allowed to be called by others', async () => {
+    const tokenFromOtherWallet = token.connect(walletTo);
+    await expect(tokenFromOtherWallet.mint(5)).to.be.revertedWith('Ownable: caller is not the owner');
+  });
+
+  it('Mint should increase the total supply', async () => {
+    await token.mint(5);
+    expect(await token.totalSupply()).to.equal(6);
+  });
+
+  it('Mint should add the new tokens to the owner address', async () => {
+    await token.mint(5);
+    expect(await token.balanceOf(wallet.address)).to.equal(6);
+  });
+
+  it('Mint should emit Transfer event', async () => {
+    await expect(token.mint(5))
+      .to.emit(token, 'Transfer')
+      .withArgs(nullAddress, wallet.address, 5);
+  });
+
+  it('Burn should revert when it exceeds balance', async () => {
+    const tokenFromOtherWallet = token.connect(walletTo);
+    await expect(tokenFromOtherWallet.burn(5)).to.be.revertedWith('BEP20: burn amount exceeds balance');
+  });
+
+  it('Burn should decrease total supply', async () => {
+    await token.burn(1);
+    expect(await token.totalSupply()).to.equal(0);
+  });
+
+  it('Burn should remove tokens from the caller address', async () => {
+    await token.burn(1);
+    expect(await token.balanceOf(wallet.address)).to.equal(0);
+  });
+
+  it('Burn should emit Transfer event', async () => {
+    await expect(token.burn(1))
+      .to.emit(token, 'Transfer')
+      .withArgs(wallet.address, nullAddress, 1);
+  });
 });
