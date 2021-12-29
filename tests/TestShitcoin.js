@@ -15,13 +15,13 @@ contract('Shitcoin', (accounts) => {
   });
 
   it('Transfer should fail to null address', async () => {
-	  const coin = await Shitcoin.new('Test coin', 'TEST', 1);
+    const coin = await Shitcoin.new('Test coin', 'TEST', 1);
 
     await truffleAssert.reverts(coin.transfer(nullAddress, 1), 'BEP20: transfer to the zero address');
   });
 
   it('Transfer should fail on low balance', async () => {
-	  const coin = await Shitcoin.new('Test coin', 'TEST', 1);
+    const coin = await Shitcoin.new('Test coin', 'TEST', 1);
 
     await truffleAssert.reverts(coin.transfer(accounts[0], 2), 'BEP20: transfer amount exceeds balance');
   });
