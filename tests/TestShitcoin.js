@@ -4,9 +4,9 @@ const ethereumWaffle = require('ethereum-waffle');
 const chai = require('chai');
 
 chai.use(ethereumWaffle.solidity);
+const expect = chai.expect;
 
-contract('Shitcoin', (accounts) => {
-  const expect = chai.expect;
+contract('Shitcoin', () => {
   const nullAddress = '0x0000000000000000000000000000000000000000';
   const [wallet, walletTo, otherWallet] = new ethereumWaffle.MockProvider().getWallets();
   let token;
@@ -21,7 +21,7 @@ contract('Shitcoin', (accounts) => {
     const result = await truffleAssert.createTransactionResult(coin, txHash);
 
     truffleAssert.eventEmitted(result, 'Transfer', (ev) => {
-      return (ev.from === nullAddress && ev.to === accounts[0] && ev.value == 1);
+      return (ev.from === nullAddress && ev.to === wallet.address && ev.value === 1);
     }, 'Creation should emit Transfer event.');
   });
 
@@ -30,7 +30,7 @@ contract('Shitcoin', (accounts) => {
   });
 
   it('Transfer should revert on low balance', async () => {
-    await expect(token.transfer(accounts[0], 2)).to.be.revertedWith('BEP20: transfer amount exceeds balance');
+    await expect(token.transfer(walletTo.address, 2)).to.be.revertedWith('BEP20: transfer amount exceeds balance');
   });
 
   it('Transfer should work', async () => {
