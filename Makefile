@@ -45,10 +45,10 @@ addresses:
 	docker compose exec $(container) truffle exec addresses.js
 
 lint:
-	docker compose exec ${container} npm run lint
-	docker compose exec ${container} npm run check
-	docker compose exec ${container} npm run lintjs
-	docker compose exec ${container} npm run checkjs
+	docker compose exec ${container} yarn run lint
+	docker compose exec ${container} yarn run check
+	docker compose exec ${container} yarn run lintjs
+	docker compose exec ${container} yarn run checkjs
 
 run:
 	docker compose exec ${container} truffle exec index.js

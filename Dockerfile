@@ -2,9 +2,11 @@ FROM trufflesuite/ganache-cli
 
 WORKDIR /usr/src/app/
 
-COPY package*.json ./
+COPY package.json yarn.lock ./
 
 ENV NODE_PATH=/usr/src/app/node_modules
 
-RUN npm i -g truffle
-RUN npm i && rm package*.json
+RUN apk add git && npm i yarn
+
+RUN yarn global add truffle
+RUN yarn && rm package.json yarn.lock
