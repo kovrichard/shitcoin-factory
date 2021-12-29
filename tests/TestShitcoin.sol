@@ -16,15 +16,23 @@ contract TestShitcoin {
 		Assert.equal(coin.symbol(), "TEST", "Should set coin symbol");
 	}
 
-	function testCreationShouldSetSupply() public {
+	function testCreationShouldSetTotalSupply() public {
 		Shitcoin coin = new Shitcoin("Test coin", "TEST", 1000);
 		Assert.equal(coin.totalSupply(), 1000, "Should set total supply");
 	}
 
-	function testCreationShouldSetDecimals() public {
+	function testCreationShouldSetDecimalsTo18() public {
 		Shitcoin coin = new Shitcoin("Test coin", "TEST", 1000);
 		Assert.equal(coin.decimals(), 18, "Should set decimals to 18");
 	}
 
-	
+	function testCreationShouldSetOwnerToCaller() public {
+		Shitcoin coin = new Shitcoin("Test coin", "TEST", 1000);
+		Assert.equal(coin.owner(), address(this), "Should set owner to caller");
+	}
+
+	function testCreationShouldAddTotalSupplyToOwner() public {
+		Shitcoin coin = new Shitcoin("Test coin", "TEST", 1000);
+		Assert.equal(coin.balanceOf(address(this)), 1000, "Should add total supply to owner");
+	}
 }
