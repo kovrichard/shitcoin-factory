@@ -31,28 +31,28 @@ jobs:
     - name: Load cache
       uses: actions/cache@v2
       with:
-        path: ~/.npm
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        path: ~/.yarn
+        key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
         restore-keys: |
           ${{ runner.os }}-node-
 
     - name: Install Ganache CLI
-      run: npm i -g ganache-cli
+      run: yarn add global ganache-cli
     
     - name: Start Ganache CLI
       run: ganache-cli &
 
     - name: Install dependencies
-      run: npm ci
+      run: yarn
 
     - name: Update packages to latest version
-      run: npm update
+      run: yarn upgrade
     
     - name: Check Solidity style
-      run: npm run check
+      run: yarn run check
     
     - name: Check JS style
-      run: npm run checkjs
+      run: yarn run checkjs
 
     - name: Run tests
-      run: npm test
+      run: yarn test
