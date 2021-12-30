@@ -38,6 +38,11 @@ contract('Shitcoin', () => {
       .to.changeTokenBalances(token, [wallet, walletTo], [-1, 1]);
   });
 
+  it('Transfer should return true on success', async () => {
+    const result = await token.callStatic.transfer(walletTo.address, 1);
+    expect(result).to.equal(true);
+  });
+
   it('Transfer should emit Transfer event', async () => {
     await expect(token.transfer(walletTo.address, 1))
       .to.emit(token, 'Transfer')
@@ -51,6 +56,11 @@ contract('Shitcoin', () => {
   it('Approve should set allowance', async () => {
     await token.approve(walletTo.address, 5);
     expect(await token.allowance(wallet.address, walletTo.address)).to.equal(5);
+  });
+
+  it('Approve should return true on success', async () => {
+    const result = await token.callStatic.approve(walletTo.address, 5);
+    expect(result).to.equal(true);
   });
 
   it('Approve should emit Approval event', async () => {
@@ -80,16 +90,35 @@ contract('Shitcoin', () => {
     expect(await token.allowance(wallet.address, walletTo.address)).to.equal(0);
   });
 
+  it('TransferFrom should return true on success', async () => {
+    const tokenFromOtherWallet = token.connect(walletTo);
+    await token.transfer(walletTo.address, 1);
+    await tokenFromOtherWallet.approve(wallet.address, 1);
+    const result = await token.callStatic.transferFrom(walletTo.address, otherWallet.address, 1);
+    expect(result).to.equal(true);
+  });
+
   it('IncreaseAllowance should work', async () => {
     await token.approve(walletTo.address, 1);
     await token.increaseAllowance(walletTo.address, 4);
     expect(await token.allowance(wallet.address, walletTo.address)).to.equal(5);
   });
 
+  it('IncreaseAllowance should return true on success', async () => {
+    const result = await token.callStatic.increaseAllowance(walletTo.address, 4);
+    expect(result).to.equal(true);
+  });
+
   it('DecreaseAllowance should work', async () => {
     await token.approve(walletTo.address, 5);
     await token.decreaseAllowance(walletTo.address, 4);
     expect(await token.allowance(wallet.address, walletTo.address)).to.equal(1);
+  });
+
+  it('DecreaseAllowance should return true on success', async () => {
+    await token.approve(walletTo.address, 5);
+    const result = await token.callStatic.decreaseAllowance(walletTo.address, 4);
+    expect(result).to.equal(true);
   });
 
   it('DecreaseAllowance should revert when deceasing below zero', async () => {
@@ -112,6 +141,11 @@ contract('Shitcoin', () => {
     expect(await token.balanceOf(wallet.address)).to.equal(6);
   });
 
+  it('Mint should return true on success', async () => {
+    const result = await token.callStatic.mint(5);
+    expect(result).to.equal(true);
+  });
+
   it('Mint should emit Transfer event', async () => {
     await expect(token.mint(5))
       .to.emit(token, 'Transfer')
@@ -131,6 +165,11 @@ contract('Shitcoin', () => {
   it('Burn should remove tokens from the caller address', async () => {
     await token.burn(1);
     expect(await token.balanceOf(wallet.address)).to.equal(0);
+  });
+
+  it('Burn should return true on success', async () => {
+    const result = await token.callStatic.burn(1);
+    expect(result).to.equal(true);
   });
 
   it('Burn should emit Transfer event', async () => {
