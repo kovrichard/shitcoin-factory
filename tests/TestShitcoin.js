@@ -2,27 +2,31 @@ const Shitcoin = artifacts.require('Shitcoin');
 const truffleAssert = require('truffle-assertions');
 const ethereumWaffle = require('ethereum-waffle');
 const chai = require('chai');
+const { toInteger } = require('lodash');
 
 chai.use(ethereumWaffle.solidity);
 const expect = chai.expect;
 
-contract('Shitcoin', () => {
-  const nullAddress = '0x0000000000000000000000000000000000000000';
-  const [wallet, walletTo, otherWallet] = new ethereumWaffle.MockProvider().getWallets();
-  let token;
+const nullAddress = '0x0000000000000000000000000000000000000000';
 
-  beforeEach(async () => {
-    token = await ethereumWaffle.deployContract(wallet, Shitcoin, ['Test coin', 'TEST', 1]);
-  });
-
+contract('Shitcoin constructor', (accounts) => {
   it('Creation should emit Transfer event', async () => {
     const coin = await Shitcoin.new('Test coin', 'TEST', 1, { from: accounts[0] });
     const txHash = coin.transactionHash;
     const result = await truffleAssert.createTransactionResult(coin, txHash);
 
     truffleAssert.eventEmitted(result, 'Transfer', (ev) => {
-      return (ev.from === nullAddress && ev.to === wallet.address && ev.value === 1);
+      return (ev.from === nullAddress && ev.to === accounts[0] && toInteger(ev.value) === 1);
     }, 'Creation should emit Transfer event.');
+  });
+});
+
+contract('Shitcoin', () => {
+  const [wallet, walletTo, otherWallet] = new ethereumWaffle.MockProvider().getWallets();
+  let token;
+
+  beforeEach(async () => {
+    token = await ethereumWaffle.deployContract(wallet, Shitcoin, ['Test coin', 'TEST', 1]);
   });
 
   it('Transfer should revert on sending to null address', async () => {
