@@ -1,4 +1,4 @@
-const ShitcoinFactory = artifacts.require("./ShitcoinFactory.sol");
+const ShitcoinFactory = artifacts.require("ShitcoinFactory");
 
 module.exports = async (callback) => {
 	let factory = await ShitcoinFactory.deployed();
