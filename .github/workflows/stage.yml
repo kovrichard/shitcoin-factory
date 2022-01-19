@@ -81,22 +81,22 @@ jobs:
           ${{ runner.os }}-node-
 
     - name: Install environment
-      working-directory: ./frontend
       run: |
         sudo apt update
         sudo apt install git chromium-browser
         yarn add -g @angular/cli
+      working-directory: ./frontend
 
     - name: Install dependencies
-      working-directory: ./frontend
       run: yarn install && ng update
+      working-directory: ./frontend
 
     - name: Check style
       run: |
-      working-directory: ./frontend
         yarn eslint '**/*.ts'
         yarn prettier --check '**/*.ts'
+      working-directory: ./frontend
 
     - name: Run tests
-      working-directory: ./frontend
       run: yarn test
+      working-directory: ./frontend
