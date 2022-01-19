@@ -1,4 +1,4 @@
-.PHONY: cbuild start stop restart sh logs compile deploy tsh test addresses lint run fsh
+.PHONY: cbuild start stop restart sh logs compile deploy tsh test addresses lint run fsh ftest
 
 container=shitcoin-factory
 frontend=frontend
@@ -54,5 +54,10 @@ lint:
 run:
 	docker compose exec $(container) truffle exec index.js
 
+# frontend commands
+
 fsh:
 	docker compose exec $(frontend) sh
+
+ftest:
+	docker compose exec -T $(frontend) /bin/sh -c "yarn test"
