@@ -84,7 +84,7 @@ jobs:
 
     - name: Install environment
       run: |
-        apt install git chromium
+        sudo apt install git chromium
         yarn add -g @angular/cli
 
     - name: Install dependencies
