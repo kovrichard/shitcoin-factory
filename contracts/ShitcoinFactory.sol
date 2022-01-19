@@ -2,8 +2,9 @@
 pragma solidity ^0.8.10;
 
 import "./Shitcoin.sol";
+import "./Ownable.sol";
 
-contract ShitcoinFactory {
+contract ShitcoinFactory is Ownable {
     Shitcoin[] private shitcoins;
 
     function create(
