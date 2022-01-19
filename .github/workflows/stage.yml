@@ -10,18 +10,19 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  test-solidity:
 
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
         node-version: [12.x, 14.x, 15.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+      with:
+        path: frontend
 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2
@@ -53,6 +54,46 @@ jobs:
     
     - name: Check JS style
       run: yarn run checkjs
+
+    - name: Run tests
+      run: yarn test
+  
+  test-angular:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x, 15.x]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Load cache
+      uses: actions/cache@v2
+      with:
+        path: ~/.yarn
+        key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+
+    - name: Install environment
+      run: |
+        apt install git chromium
+        yarn add -g @angular/cli
+
+    - name: Install dependencies
+      run: yarn install && ng update
+
+    - name: Check style
+      run: |
+        yarn eslint '**/*.ts'
+        yarn prettier --check '**/*.ts'
 
     - name: Run tests
       run: yarn test
