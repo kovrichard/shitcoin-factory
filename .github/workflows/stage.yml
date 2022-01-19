@@ -83,10 +83,9 @@ jobs:
     - name: Install environment
       working-directory: ./frontend
       run: |
-        ls
         sudo apt update
         sudo apt install git chromium-browser
-        yarn add -g @angular/cli
+        yarn global add @angular/cli
 
     - name: Install dependencies
       working-directory: ./frontend
