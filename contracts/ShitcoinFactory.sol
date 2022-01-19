@@ -12,6 +12,7 @@ contract ShitcoinFactory {
         uint256 totalSupply
     ) public {
         Shitcoin shitcoin = new Shitcoin(name, symbol, totalSupply);
+        shitcoin.transferOwnership(msg.sender);
         shitcoins.push(shitcoin);
     }
 
