@@ -66,8 +66,6 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-      with:
-        path: frontend
       
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2
@@ -87,6 +85,9 @@ jobs:
         sudo apt update
         sudo apt install git chromium-browser
         yarn add -g @angular/cli
+
+    - name: Change directory to frontend
+      run: cd frontend
 
     - name: Install dependencies
       run: yarn install && ng update
