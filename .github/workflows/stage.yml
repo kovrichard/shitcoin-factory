@@ -90,7 +90,7 @@ jobs:
     - name: Check style
       working-directory: ./frontend
       run: |
-        yarn eslint --config ./.eslintrc.json '**/*.ts'
+        yarn eslint --config ./frontend/.eslintrc.json '**/*.ts'
         yarn prettier --check '**/*.ts'
 
     - name: Run tests
