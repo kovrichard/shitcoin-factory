@@ -36,6 +36,7 @@
     "@typescript-eslint/eslint-plugin": "^5.10.0",
     "@typescript-eslint/parser": "^5.10.0",
     "eslint": "^8.7.0",
+    "eslint-config-standard": "^16.0.3",
     "eslint-config-standard-with-typescript": "^21.0.1",
     "eslint-plugin-unused-imports": "^2.0.0",
     "jasmine-core": "~3.10.0",
