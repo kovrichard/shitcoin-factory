@@ -1,9 +1,10 @@
-.PHONY: build start stop restart sh logs compile deploy tsh test addresses lint run
+.PHONY: cbuild start stop restart sh logs compile deploy tsh test addresses lint run fsh
 
 container=shitcoin-factory
+frontend=frontend
 
 # Build the container
-build:
+cbuild:
 	docker compose build
 
 # Start the container
@@ -23,7 +24,7 @@ sh:
 
 # Watch live logs of the container
 logs:
-	docker compose logs -f $(container)
+	docker compose logs -f
 
 # Compile smart contracts
 compile:
@@ -52,3 +53,6 @@ lint:
 
 run:
 	docker compose exec $(container) truffle exec index.js
+
+fsh:
+	docker compose exec $(frontend) sh
