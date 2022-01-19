@@ -80,22 +80,23 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-node-
 
-    - name: Change directory to frontend
-      run: cd frontend
-
     - name: Install environment
+      working-directory: ./frontend
       run: |
         sudo apt update
         sudo apt install git chromium-browser
         yarn add -g @angular/cli
 
     - name: Install dependencies
+      working-directory: ./frontend
       run: yarn install && ng update
 
     - name: Check style
       run: |
+      working-directory: ./frontend
         yarn eslint '**/*.ts'
         yarn prettier --check '**/*.ts'
 
     - name: Run tests
+      working-directory: ./frontend
       run: yarn test
