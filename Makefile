@@ -1,4 +1,4 @@
-.PHONY: cbuild start stop restart sh logs compile deploy tsh test addresses lint run fsh ftest
+.PHONY: cbuild start stop restart sh logs compile deploy tsh test addresses lint run fsh ftest flint
 
 container=shitcoin-factory
 frontend=frontend
@@ -61,3 +61,7 @@ fsh:
 
 ftest:
 	docker compose exec -T $(frontend) /bin/sh -c "yarn test"
+
+flint:
+	docker compose exec -T $(frontend) /bin/sh -c "yarn eslint '**/*.ts' --fix"
+	docker compose exec -T $(frontend) /bin/sh -c "yarn prettier --write '**/*.ts'"
