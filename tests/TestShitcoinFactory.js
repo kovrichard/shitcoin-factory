@@ -34,6 +34,14 @@ contract('ShitcoinFactory', () => {
     expect(await contract.callStatic.getOwner()).to.equal(wallet.address);
   });
 
+  it('Create should transfer coins to caller', async () => {
+    await factory.create('Test token', 'TTN', 5, { from: wallet.address });
+    const token = await factory.getShitcoin(0);
+    const contract = new ethers.Contract(token, Shitcoin.abi, wallet);
+
+    expect(await contract.callStatic.balanceOf(wallet.address)).to.equal(BigInt(5 * ether));
+  });
+
   it('NumberOfCoins should return number of coins', async () => {
     await factory.create('Test token', 'TTN', 5);
     expect(await factory.numberOfCoins()).to.equal(1);

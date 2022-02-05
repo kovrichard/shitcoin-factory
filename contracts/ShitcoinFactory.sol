@@ -14,6 +14,7 @@ contract ShitcoinFactory is Ownable {
     ) public {
         Shitcoin shitcoin = new Shitcoin(name, symbol, totalSupply);
         shitcoin.transferOwnership(msg.sender);
+        shitcoin.transfer(msg.sender, shitcoin.totalSupply());
         shitcoins.push(shitcoin);
     }
 
