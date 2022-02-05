@@ -8,6 +8,7 @@ chai.use(ethereumWaffle.solidity);
 const expect = chai.expect;
 
 const nullAddress = '0x0000000000000000000000000000000000000000';
+const ether = 10 ** 18;
 
 contract('Shitcoin constructor', (accounts) => {
   it('Creation should emit Transfer event', async () => {
@@ -16,7 +17,7 @@ contract('Shitcoin constructor', (accounts) => {
     const result = await truffleAssert.createTransactionResult(coin, txHash);
 
     truffleAssert.eventEmitted(result, 'Transfer', (ev) => {
-      return (ev.from === nullAddress && ev.to === accounts[0] && toInteger(ev.value) === 1);
+      return (ev.from === nullAddress && ev.to === accounts[0] && BigInt(toInteger(ev.value)) === BigInt(1 * ether));
     }, 'Creation should emit Transfer event.');
   });
 });
@@ -34,7 +35,7 @@ contract('Shitcoin', () => {
   });
 
   it('Transfer should revert on low balance', async () => {
-    await expect(token.transfer(walletTo.address, 2)).to.be.revertedWith('BEP20: transfer amount exceeds balance');
+    await expect(token.transfer(walletTo.address, BigInt(2 * ether))).to.be.revertedWith('BEP20: transfer amount exceeds balance');
   });
 
   it('Transfer should work', async () => {
@@ -136,13 +137,13 @@ contract('Shitcoin', () => {
   });
 
   it('Mint should increase the total supply', async () => {
-    await token.mint(5);
-    expect(await token.totalSupply()).to.equal(6);
+    await token.mint(BigInt(5 * ether));
+    expect(await token.totalSupply()).to.equal(BigInt(6 * ether));
   });
 
   it('Mint should add the new tokens to the owner address', async () => {
-    await token.mint(5);
-    expect(await token.balanceOf(wallet.address)).to.equal(6);
+    await token.mint(BigInt(5 * ether));
+    expect(await token.balanceOf(wallet.address)).to.equal(BigInt(6 * ether));
   });
 
   it('Mint should return true on success', async () => {
@@ -162,12 +163,12 @@ contract('Shitcoin', () => {
   });
 
   it('Burn should decrease total supply', async () => {
-    await token.burn(1);
+    await token.burn(BigInt(1 * ether));
     expect(await token.totalSupply()).to.equal(0);
   });
 
   it('Burn should remove tokens from the caller address', async () => {
-    await token.burn(1);
+    await token.burn(BigInt(1 * ether));
     expect(await token.balanceOf(wallet.address)).to.equal(0);
   });
 

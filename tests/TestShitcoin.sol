@@ -30,7 +30,7 @@ contract TestShitcoin {
 
 	function testCreationShouldSetTotalSupply() public {
 		Shitcoin coin = createCoin(1000);
-		Assert.equal(coin.totalSupply(), 1000, "Should set total supply");
+		Assert.equal(coin.totalSupply(), 1000 * (10 ** 18), "Should set total supply");
 	}
 
 	function testCreationShouldSetDecimalsTo18() public {
@@ -45,6 +45,6 @@ contract TestShitcoin {
 
 	function testCreationShouldAddTotalSupplyToOwner() public {
 		Shitcoin coin = createCoin(1000);
-		Assert.equal(coin.balanceOf(address(this)), 1000, "Should add total supply to owner");
+		Assert.equal(coin.balanceOf(address(this)), 1000 * (10 ** 18), "Should add total supply to owner");
 	}
 }

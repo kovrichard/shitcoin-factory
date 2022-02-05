@@ -26,7 +26,7 @@ contract Shitcoin is Context, IBEP20, Ownable {
         _name = tokenName;
         _symbol = tokenSymbol;
         _decimals = 18;
-        _totalSupply = supply;
+        _totalSupply = supply * (10**_decimals);
         _balances[msg.sender] = _totalSupply;
 
         emit Transfer(address(0), msg.sender, _totalSupply);

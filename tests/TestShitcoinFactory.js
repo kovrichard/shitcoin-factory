@@ -6,6 +6,7 @@ const chai = require('chai');
 
 chai.use(ethereumWaffle.solidity);
 const expect = chai.expect;
+const ether = 10 ** 18;
 
 contract('ShitcoinFactory', () => {
   const [wallet] = new ethereumWaffle.MockProvider().getWallets();
@@ -22,7 +23,7 @@ contract('ShitcoinFactory', () => {
 
     expect(await contract.callStatic.name()).to.equal('Test token');
     expect(await contract.callStatic.symbol()).to.equal('TTN');
-    expect(await contract.callStatic.totalSupply()).to.equal(5);
+    expect(await contract.callStatic.totalSupply()).to.equal(BigInt(5 * ether));
   });
 
   it('Create should transfer ownership to caller', async () => {
