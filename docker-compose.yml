@@ -9,6 +9,7 @@ services:
       - exclude:/usr/src/app/node_modules/
     ports:
       - 8545:8545
+    command: ganache-cli --account_keys_path ./keys.json
 
 volumes:
   exclude:
