@@ -12,7 +12,7 @@ contract ShitcoinFactory is Ownable {
         string memory symbol,
         uint256 totalSupply
     ) public {
-        Shitcoin shitcoin = new Shitcoin(name, symbol, totalSupply);
+        Shitcoin shitcoin = new Shitcoin(name, symbol, totalSupply * (10**18));
         shitcoin.transferOwnership(msg.sender);
         shitcoin.transfer(msg.sender, shitcoin.totalSupply());
         shitcoins.push(shitcoin);
