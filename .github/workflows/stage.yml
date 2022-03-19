@@ -36,10 +36,10 @@ jobs:
           ${{ runner.os }}-node-
 
     - name: Install Ganache CLI
-      run: yarn global add ganache-cli
+      run: yarn global add ganache
     
     - name: Start Ganache CLI
-      run: ganache-cli &
+      run: ganache &
 
     - name: Install dependencies
       run: yarn
