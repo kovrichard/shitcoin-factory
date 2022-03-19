@@ -1,9 +1,9 @@
 
 // SPDX-License-Identifier: GPL-3.0
-pragma solidity ^0.8.10;
+pragma solidity ^0.8.13;
 
 import "../contracts/Shitcoin.sol";
-import "../node_modules/truffle/build/Assert.sol";
+import "truffle/Assert.sol";
 
 contract TestShitcoin {
 	function createCoin(string memory name, string memory symbol, uint256 totalSupply) internal returns (Shitcoin) {
@@ -18,29 +18,19 @@ contract TestShitcoin {
 		return createCoin("Test coin", "TEST", 1);
 	}
 
-	function testCreationShouldSetName() public {
-		Shitcoin coin = createCoin();
-		Assert.equal(coin.name(), "Test coin", "Should set coin name");
-	}
-
-	function testCreationShouldSetSymbol() public {
-		Shitcoin coin = createCoin();
-		Assert.equal(coin.symbol(), "TEST", "Should set coin symbol");
-	}
-
 	function testCreationShouldSetTotalSupply() public {
 		Shitcoin coin = createCoin(1000);
-		Assert.equal(coin.totalSupply(), 1000, "Should set total supply");
+		Assert.equal(uint256(coin.totalSupply()), 1000, "Should set total supply");
 	}
 
 	function testCreationShouldSetDecimalsTo18() public {
 		Shitcoin coin = createCoin();
-		Assert.equal(coin.decimals(), 18, "Should set decimals to 18");
+		Assert.equal(uint8(coin.decimals()), 18, "Should set decimals to 18");
 	}
 
 	function testCreationShouldSetOwnerToCaller() public {
 		Shitcoin coin = createCoin();
-		Assert.equal(coin.owner(), address(this), "Should set owner to caller");
+		Assert.equal(address(coin.owner()), address(this), "Should set owner to caller");
 	}
 
 	function testCreationShouldAddTotalSupplyToOwner() public {

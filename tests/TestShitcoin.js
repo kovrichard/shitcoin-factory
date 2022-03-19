@@ -30,6 +30,14 @@ contract('Shitcoin', () => {
     token = await ethereumWaffle.deployContract(wallet, Shitcoin, ['Test coin', 'TEST', 1]);
   });
 
+  it('Name should return coin name', async () => {
+    expect(await token.name()).to.equal('Test coin');
+  });
+
+  it('Symbol should return coin symbol', async () => {
+    expect(await token.symbol()).to.equal('TEST');
+  });
+
   it('Transfer should revert on sending to null address', async () => {
     await expect(token.transfer(nullAddress, 1)).to.be.revertedWith('BEP20: transfer to the zero address');
   });
