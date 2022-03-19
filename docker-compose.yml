@@ -3,6 +3,9 @@ services:
   shitcoin-factory:
     build: ./
     image: shitcoin-factory
+    environment:
+      MNEMONIC: this is just some fake mnemonic used instead of a real one
+      INFURA_PROJECT_ID: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
     working_dir: /usr/src/app
     volumes:
       - ./:/usr/src/app
