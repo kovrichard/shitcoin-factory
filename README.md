@@ -1,5 +1,7 @@
 # shitcoin-factory
 
+You can find the website of the factory at [ShitcoinFactory.com](www.shitcoinfactory.com).
+
 ## Requirements
 
 - [Docker Desktop](https://www.docker.com/products/docker-desktop)
