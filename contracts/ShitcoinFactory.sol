@@ -58,5 +58,4 @@ contract ShitcoinFactory is Ownable {
     function getCost() public view returns (uint256) {
         return _cost;
     }
-
 }
