@@ -44,6 +44,29 @@ contract('ShitcoinFactory', () => {
     expect(await contract.callStatic.balanceOf(wallet.address)).to.equal(BigInt(5 * ether));
   });
 
+  it('Create should be free with the zero cost address', async () => {
+    const otherFactory = factory.connect(otherWallet);
+    await otherFactory.create('Cost token', 'COST', 1000);
+    const token = await otherFactory.getShitcoin(0);
+    
+    const contract = new ethers.Contract(token, Shitcoin.abi, otherWallet);
+    await otherFactory.create('New token', 'NEW', 1000);
+
+    expect(await contract.balanceOf(otherWallet.address)).to.equal(BigInt(1000*ether));
+  });
+
+  it('Caller should have enough coins to cover the cost of creation', async () => {
+    const otherFactory = factory.connect(otherWallet);
+    await otherFactory.create('Cost token', 'COST', 5);
+    const token = await otherFactory.getShitcoin(0);
+    const f = factory.connect(wallet);
+    await f.setCostAddress(token);
+    
+    const contract = new ethers.Contract(token, Shitcoin.abi, otherWallet);
+    await contract.approve(factory.address, BigInt(10 * ether));
+    await expect(otherFactory.create('New token', 'NEW', 1000)).to.be.revertedWith('Cost balance is low');
+  });
+
   it('Create should transfer cost coins to owner', async () => {
     const otherFactory = factory.connect(otherWallet);
     await otherFactory.create('Cost token', 'COST', 1000);
