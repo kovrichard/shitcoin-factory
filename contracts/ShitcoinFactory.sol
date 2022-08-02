@@ -22,8 +22,8 @@ contract ShitcoinFactory is Ownable {
     ) public {
         if (_costAddress != address(0x0000000000000000000000000000000000000000)) {
             IBEP20 costContract = IBEP20(address(_costAddress));
-            uint256 balance = costContract.balanceOf(msg.sender);
-            require(_cost <= balance, "Cost balance is low");
+            require(_cost <= costContract.balanceOf(msg.sender), "Cost balance is low");
+            require(_cost <= costContract.allowance(msg.sender, address(this)), "Allowance is low");
             costContract.transferFrom(msg.sender, owner(), _cost);
         }
 

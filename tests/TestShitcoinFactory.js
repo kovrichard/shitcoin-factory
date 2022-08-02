@@ -67,6 +67,16 @@ contract('ShitcoinFactory', () => {
     await expect(otherFactory.create('New token', 'NEW', 1000)).to.be.revertedWith('Cost balance is low');
   });
 
+  it('Caller should have enough allowance for the factory to spend', async () => {
+    const otherFactory = factory.connect(otherWallet);
+    await otherFactory.create('Cost token', 'COST', 1000);
+    const token = await otherFactory.getShitcoin(0);
+    const f = factory.connect(wallet);
+    await f.setCostAddress(token);
+
+    await expect(otherFactory.create('New token', 'NEW', 1000)).to.be.revertedWith('Allowance is low');
+  });
+
   it('Create should transfer cost coins to owner', async () => {
     const otherFactory = factory.connect(otherWallet);
     await otherFactory.create('Cost token', 'COST', 1000);
