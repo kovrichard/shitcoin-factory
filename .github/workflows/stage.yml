@@ -51,6 +51,11 @@ jobs:
     - name: Run tests
       run: yarn test
 
+    - name: Deploy to Polygon Test Network
+      env:
+        MNEMONIC: ${{ secrets.MNEMONIC }}
+      run: truffle migrate --network polygonTestnet --reset
+
     - name: Deploy to BSC Test Network
       env:
         MNEMONIC: ${{ secrets.MNEMONIC }}
@@ -61,8 +66,3 @@ jobs:
         INFURA_PROJECT_ID: ${{ secrets.INFURA_PROJECT_ID }}
         MNEMONIC: ${{ secrets.MNEMONIC }}
       run: truffle migrate --network ropsten --reset
-
-    - name: Deploy to Polygon Test Network
-      env:
-        MNEMONIC: ${{ secrets.MNEMONIC }}
-      run: truffle migrate --network polygonTestnet --reset
