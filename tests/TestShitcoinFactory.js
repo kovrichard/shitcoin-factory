@@ -112,15 +112,39 @@ contract('ShitcoinFactory', () => {
     expect(await contract2.callStatic.symbol()).to.equal('TN2');
   });
 
+  it('SetCostAddress should return true on success', async () => {
+    const r = await factory.callStatic.setCostAddress('0x0000000000000000000000000000000000000123');
+
+    expect(r).to.equal(true);
+  });
+
   it('SetCostAddress should set cost address', async () => {
     await factory.setCostAddress('0x0000000000000000000000000000000000000123');
 
     expect(await factory.costAddress()).to.equal('0x0000000000000000000000000000000000000123');
   });
 
+  it('SetCostAddress should not be allowed to be called by others', async () => {
+    const otherFactory = factory.connect(otherWallet);
+
+    await expect(otherFactory.setCostAddress(nullAddress)).to.be.revertedWith('Ownable: caller is not the owner');
+  });
+
+  it('SetCost should return true on success', async () => {
+    const r = await factory.callStatic.setCost(10);
+
+    expect(r).to.equal(true);
+  });
+
   it('SetCost should set cost', async () => {
     await factory.setCost(10);
 
     expect(await factory.getCost()).to.equal(10);
+  });
+
+  it('SetCost should not be allowed to be called by others', async () => {
+    const otherFactory = factory.connect(otherWallet);
+
+    await expect(otherFactory.setCost(10)).to.be.revertedWith('Ownable: caller is not the owner');
   });
 });
