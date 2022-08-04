@@ -83,6 +83,13 @@ module.exports = {
       confirmations: 10,
       timeoutBlocks: 200,
       skipDryRun: true
+    },
+    polygonTestnet: {
+      provider: () => new HDWalletProvider(mnemonic, 'https://rpc-mumbai.matic.today'),
+      network_id: 80001,
+      confirmations: 10,
+      timeoutBlocks: 200,
+      skipDryRun: true
     }
   },
 
