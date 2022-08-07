@@ -91,7 +91,7 @@ jobs:
     - name: Deploy to Polygon Test Network
       env:
         MNEMONIC: ${{ secrets.MNEMONIC }}
-        ALCHEMY_API_KEY: ${{ secrets.ALCHEMY_API_KEY }}
+        ALCHEMY_API_KEY_STAGE: ${{ secrets.ALCHEMY_API_KEY_STAGE }}
       continue-on-error: true
       run: truffle migrate --network polygonTestnet --reset
 

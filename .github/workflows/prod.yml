@@ -72,7 +72,7 @@ jobs:
     - name: Deploy to Polygon Main Network
       env:
         MNEMONIC: ${{ secrets.MNEMONIC }}
-        ALCHEMY_API_KEY: ${{ secrets.ALCHEMY_API_KEY }}
+        ALCHEMY_API_KEY_PROD: ${{ secrets.ALCHEMY_API_KEY_PROD }}
       continue-on-error: true
       run: truffle migrate --network polygonMainnet --reset
 

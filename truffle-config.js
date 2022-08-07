@@ -25,7 +25,8 @@ const HDWalletProvider = require('@truffle/hdwallet-provider');
 // const mnemonic = fs.readFileSync(".secret").toString().trim();
 const infuraProjectId = process.env.INFURA_PROJECT_ID;
 const mnemonic = process.env.MNEMONIC;
-const alchemyApiKey = process.env.ALCHEMY_API_KEY
+const alchemyApiKeyStage = process.env.ALCHEMY_API_KEY_STAGE;
+const alchemyApiKeyProd = process.env.ALCHEMY_API_KEY_PROD;
 
 module.exports = {
   /**
@@ -85,13 +86,27 @@ module.exports = {
       timeoutBlocks: 200,
       skipDryRun: true
     },
+    bscMainnet: {
+      provider: () => new HDWalletProvider(mnemonic, 'https://bsc-dataseed4.binance.org'),
+      network_id: 56,
+      confirmations: 10,
+      timeoutBlocks: 200,
+      skipDryRun: true
+    },
     polygonTestnet: {
-      provider: () => new HDWalletProvider(mnemonic, `https://polygon-mumbai.g.alchemy.com/v2/${alchemyApiKey}`),
+      provider: () => new HDWalletProvider(mnemonic, `https://polygon-mumbai.g.alchemy.com/v2/${alchemyApiKeyStage}`),
       network_id: 80001,
       confirmations: 2,
       timeoutBlocks: 200,
       skipDryRun: true
-    }
+    },
+    polygonMainnet: {
+      provider: () => new HDWalletProvider(mnemonic, `https://polygon-mainnet.g.alchemy.com/v2/${alchemyApiKeyProd}`),
+      network_id: 137,
+      confirmations: 2,
+      timeoutBlocks: 200,
+      skipDryRun: true
+    },
   },
 
   // Set default mocha options here, use special reporters etc.
