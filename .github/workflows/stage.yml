@@ -54,6 +54,7 @@ jobs:
     - name: Deploy to Polygon Test Network
       env:
         MNEMONIC: ${{ secrets.MNEMONIC }}
+        ALCHEMY_API_KEY: ${{ secrets.ALCHEMY_API_KEY }}
       run: truffle migrate --network polygonTestnet --reset
 
     - name: Deploy to BSC Test Network

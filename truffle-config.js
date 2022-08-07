@@ -25,6 +25,7 @@ const HDWalletProvider = require('@truffle/hdwallet-provider');
 // const mnemonic = fs.readFileSync(".secret").toString().trim();
 const infuraProjectId = process.env.INFURA_PROJECT_ID;
 const mnemonic = process.env.MNEMONIC;
+const alchemyApiKey = process.env.ALCHEMY_API_KEY
 
 module.exports = {
   /**
@@ -85,7 +86,7 @@ module.exports = {
       skipDryRun: true
     },
     polygonTestnet: {
-      provider: () => new HDWalletProvider(mnemonic, 'https://rpc-mumbai.maticvigil.com'),
+      provider: () => new HDWalletProvider(mnemonic, `https://polygon-mumbai.g.alchemy.com/v2/${alchemyApiKey}`),
       network_id: 80001,
       confirmations: 2,
       timeoutBlocks: 200,
