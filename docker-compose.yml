@@ -6,6 +6,8 @@ services:
     environment:
       MNEMONIC: this is just some fake mnemonic used instead of a real one
       INFURA_PROJECT_ID: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+      ALCHEMY_API_KEY_STAGE: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+      ALCHEMY_API_KEY_PROD: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
     working_dir: /usr/src/app
     volumes:
       - ./:/usr/src/app
