@@ -10,7 +10,7 @@ on:
     branches: [ main ]
 
 jobs:
-  test-deploy:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -25,10 +25,10 @@ jobs:
     - name: Load cache
       uses: actions/cache@v2
       with:
-        path: ~/.yarn
-        key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+        path: '**/node_modules'
+        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
         restore-keys: |
-          ${{ runner.os }}-node-
+          ${{ runner.os }}-modules-
 
     - name: Install Ganache and Truffle CLI
       run: yarn global add truffle ganache
