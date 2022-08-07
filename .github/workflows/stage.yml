@@ -55,15 +55,18 @@ jobs:
       env:
         MNEMONIC: ${{ secrets.MNEMONIC }}
         ALCHEMY_API_KEY: ${{ secrets.ALCHEMY_API_KEY }}
+      continue-on-error: true
       run: truffle migrate --network polygonTestnet --reset
 
     - name: Deploy to BSC Test Network
       env:
         MNEMONIC: ${{ secrets.MNEMONIC }}
+      continue-on-error: true
       run: truffle migrate --network bscTestnet --reset
 
     - name: Deploy to Ethereum Ropsten Test Network
       env:
         INFURA_PROJECT_ID: ${{ secrets.INFURA_PROJECT_ID }}
         MNEMONIC: ${{ secrets.MNEMONIC }}
+      continue-on-error: true
       run: truffle migrate --network ropsten --reset
