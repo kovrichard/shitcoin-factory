@@ -22,21 +22,28 @@ jobs:
       with:
         node-version: 15.x
 
+    - name: Get yarn cache directory path
+      id: yarn-cache-dir-path
+      run: echo "::set-output name=dir::$(yarn cache dir)"
+
     - name: Load cache
+      id: yarn-cache
       uses: actions/cache@v2
       with:
-        path: '**/node_modules'
-        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+        path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
         restore-keys: |
-          ${{ runner.os }}-modules-
+          ${{ runner.os }}-yarn-
 
     - name: Install Ganache and Truffle CLI
+      if: steps.yarn-cache.outputs.cache-hit != 'true'
       run: yarn global add truffle ganache
     
     - name: Start Ganache CLI
       run: ganache &
 
     - name: Install dependencies
+      if: steps.yarn-cache.outputs.cache-hit != 'true'
       run: yarn
 
     - name: Update packages to latest version
