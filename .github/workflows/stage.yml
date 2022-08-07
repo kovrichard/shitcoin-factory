@@ -42,7 +42,6 @@ jobs:
       run: ganache &
 
     - name: Install dependencies
-      if: steps.yarn-cache.outputs.cache-hit != 'true'
       run: yarn
 
     - name: Check Solidity style
