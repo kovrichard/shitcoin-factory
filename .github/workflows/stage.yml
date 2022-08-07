@@ -51,6 +51,35 @@ jobs:
     - name: Run tests
       run: yarn test
 
+  deploy-polygon:
+    runs-on: ubuntu-latest
+    needs: [test]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Use Node.js 15.x
+      uses: actions/setup-node@v2
+      with:
+        node-version: 15.x
+
+    - name: Load cache
+      uses: actions/cache@v2
+      with:
+        path: '**/node_modules'
+        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-modules-
+    - name: Install Ganache and Truffle CLI
+      run: yarn global add truffle ganache
+    
+    - name: Start Ganache CLI
+      run: ganache &
+
+    - name: Install dependencies
+      run: yarn
+    
     - name: Deploy to Polygon Test Network
       env:
         MNEMONIC: ${{ secrets.MNEMONIC }}
@@ -58,12 +87,70 @@ jobs:
       continue-on-error: true
       run: truffle migrate --network polygonTestnet --reset
 
+  deploy-bsc:
+    runs-on: ubuntu-latest
+    needs: [test]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Use Node.js 15.x
+      uses: actions/setup-node@v2
+      with:
+        node-version: 15.x
+
+    - name: Load cache
+      uses: actions/cache@v2
+      with:
+        path: '**/node_modules'
+        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-modules-
+    - name: Install Ganache and Truffle CLI
+      run: yarn global add truffle ganache
+    
+    - name: Start Ganache CLI
+      run: ganache &
+
+    - name: Install dependencies
+      run: yarn
+
     - name: Deploy to BSC Test Network
       env:
         MNEMONIC: ${{ secrets.MNEMONIC }}
       continue-on-error: true
       run: truffle migrate --network bscTestnet --reset
 
+  deploy-ropsten:
+    runs-on: ubuntu-latest
+    needs: [test]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Use Node.js 15.x
+      uses: actions/setup-node@v2
+      with:
+        node-version: 15.x
+
+    - name: Load cache
+      uses: actions/cache@v2
+      with:
+        path: '**/node_modules'
+        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-modules-
+    - name: Install Ganache and Truffle CLI
+      run: yarn global add truffle ganache
+    
+    - name: Start Ganache CLI
+      run: ganache &
+
+    - name: Install dependencies
+      run: yarn
+    
     - name: Deploy to Ethereum Ropsten Test Network
       env:
         INFURA_PROJECT_ID: ${{ secrets.INFURA_PROJECT_ID }}
