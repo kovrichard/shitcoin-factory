@@ -130,6 +130,20 @@ module.exports = {
       timeoutBlocks: 200,
       skipDryRun: true
     },
+    avalancheTestnet: {
+      provider: () => new HDWalletProvider(mnemonic, 'https://api.avax-test.network/ext/bc/C/rpc'),
+      network_id: 43113,
+      confirmations: 2,
+      timeoutBlocks: 500,
+      skipDryRun: true
+    },
+    avalancheMainnet: {
+      provider: () => new HDWalletProvider(mnemonic, 'https://api.avax.network/ext/bc/C/rpc'),
+      network_id: 43114,
+      confirmations: 2,
+      timeoutBlocks: 500,
+      skipDryRun: false
+    },
   },
 
   // Set default mocha options here, use special reporters etc.
