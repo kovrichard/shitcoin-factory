@@ -3,7 +3,8 @@ const ethers = require('ethers');
 const abi = JSON.parse(fs.readFileSync('./build/contracts/ShitcoinFactory.json'));
 const caddress = '0x0000000000000000000000000000000000000000';
 
-provider = new ethers.providers.InfuraProvider('sepolia');
+//let provider = new ethers.providers.InfuraProvider('');
+let provider = new ethers.providers.JsonRpcProvider('');
 let wallet = new ethers.Wallet.fromMnemonic('');
 let signer = wallet.connect(provider);
 let contract = new ethers.Contract(caddress, abi.abi, signer);
