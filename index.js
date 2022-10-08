@@ -15,7 +15,7 @@ module.exports = async (callback) => {
 	console.log(await contract.getCost());
 
 	//await contract.setCostAddress('0x0000000000000000000000000000000000000000');
-	//await contract.setCost(BigInt(10 * 10 ** 18));
-
+	//const options = { gasPrice: 30000000028, gasLimit: 5000000};
+	//await contract.setCost(BigInt(10 * 10 ** 18), options);
 	callback();
 }
