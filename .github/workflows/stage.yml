@@ -81,7 +81,6 @@ jobs:
     - name: Deploy to Avalanche Test Network
       env:
         MNEMONIC: ${{ secrets.MNEMONIC }}
-        ALCHEMY_API_KEY_STAGE: ${{ secrets.ALCHEMY_API_KEY_STAGE }}
       continue-on-error: true
       run: truffle migrate --network avalancheTestnet --reset
 
